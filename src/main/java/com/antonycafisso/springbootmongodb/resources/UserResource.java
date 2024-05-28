@@ -1,6 +1,7 @@
 package com.antonycafisso.springbootmongodb.resources;
 
 import com.antonycafisso.springbootmongodb.domain.User;
+import com.antonycafisso.springbootmongodb.dto.UserDTO;
 import com.antonycafisso.springbootmongodb.services.UserService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -21,9 +23,10 @@ public class UserResource {
     private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<User>> findAll(){
-        List<User> users = userService.findAll();
-        return ResponseEntity.ok().body(users);
+    public ResponseEntity<List<UserDTO>> findAll(){
+        List<User> list = userService.findAll();
+        List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listDto);
     }
 
 
