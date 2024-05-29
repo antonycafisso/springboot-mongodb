@@ -1,6 +1,7 @@
 package com.antonycafisso.springbootmongodb.services;
 
 import com.antonycafisso.springbootmongodb.domain.User;
+import com.antonycafisso.springbootmongodb.dto.UserDTO;
 import com.antonycafisso.springbootmongodb.repositories.UserRepository;
 import com.antonycafisso.springbootmongodb.services.exception.ObjectNotFoundException;
 
@@ -22,5 +23,13 @@ public class UserService {
     public User findById(String id){
         Optional<User> optionalUser = userRepository.findById(id);
         return optionalUser.orElseThrow(() -> new ObjectNotFoundException("User not found"));
+    }
+
+    public User insert(User user){
+        return userRepository.insert(user);    
+    }
+
+    public User fromDTO(UserDTO userDTO ){
+        return new User(userDTO.getId(), userDTO.getName(),userDTO.getEmail());
     }
 }
