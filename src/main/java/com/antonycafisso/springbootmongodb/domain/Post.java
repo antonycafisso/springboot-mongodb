@@ -17,8 +17,6 @@ public class Post implements Serializable {
     private Date date;
     private String title;
     private String body;
-
-    @Autowired
     private User user;
 
     public Post() {
